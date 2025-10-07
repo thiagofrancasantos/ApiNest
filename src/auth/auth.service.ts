@@ -14,11 +14,20 @@ export class AuthService {
   ) {}
 
   async createToken(user: User) {
-    return this.jwtService.sign({
-      sub: user.id,
-      name: user.name,
-      email: user.email,
-    });
+    return {
+      accessToken: this.jwtService.sign(
+        {
+          name: user.name,
+          email: user.email,
+        },
+        {
+          expiresIn: '7days',
+          subject: String(user.id),
+          issuer: 'login',
+          audience: 'users',
+        },
+      ),
+    };
   }
 
   async checkToken() {
