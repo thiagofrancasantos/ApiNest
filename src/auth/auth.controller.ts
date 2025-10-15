@@ -34,7 +34,8 @@ export class AuthController {
   }
 
   @Post('me')
-  async me(@Body() body) {
+  async me(@(new Headers()) headers) {
+    return headers;
     return this.authService.checkToken(body.token);
   }
 }
